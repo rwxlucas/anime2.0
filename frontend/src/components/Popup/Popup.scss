@@ -1,0 +1,27 @@
+.popupDiv {
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+	display: flex;
+	justify-content: center;
+}
+
+.closePopup {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100vw;
+	height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.popup {
+	position: relative;
+	z-index: 100;
+	transition: ease-in-out 0.5s transform;
+	height: max-content;
+	transform: translateY(-100vh);
+	&.show {
+		transform: translateY(30%);
+	}
+}

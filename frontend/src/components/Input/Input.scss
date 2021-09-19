@@ -1,0 +1,23 @@
+.dark {
+	background-color: #222;
+	color: #fff;
+	&::placeholder{
+		color: #fff;
+	}
+	&:focus {
+		border-bottom: 2px solid #fff;
+	}
+}
+
+.light {
+	background-color: #888;
+	color: #222;
+}
+
+.text {
+	height: 100%;
+	width: 100%;
+	padding: 10px 5px;
+	border: 2px solid transparent;
+	outline: none;
+}

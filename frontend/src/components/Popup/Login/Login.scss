@@ -1,0 +1,35 @@
+.login {
+	width: 300px;
+	height: 350px;
+	background-color: #333;
+	padding: 10px 15px;
+	> div {
+		width: 100%;
+		color: #fff;
+		&:nth-child(1) {
+			display: flex;
+			> i {
+				margin-left: auto;
+				color: #fff;
+				&:hover {
+					cursor: pointer;
+				}
+			}
+		}
+		&:nth-child(2) {
+			text-align: left;
+			margin-bottom: 20px;
+		}
+		&:nth-child(3) {
+			> div {
+				height: 40px;
+				&:first-of-type {
+					margin-bottom: 5px;
+				}
+				&:last-of-type {
+					margin-bottom: 15px;
+				}
+			}
+		}
+	}
+}

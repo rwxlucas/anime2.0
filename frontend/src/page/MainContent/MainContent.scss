@@ -1,0 +1,6 @@
+@import '../../variables.scss';
+.mainContentPage {
+	width: 100%;
+	min-height: calc(100vh - $navbar-height);
+	background-color: #111;
+}
