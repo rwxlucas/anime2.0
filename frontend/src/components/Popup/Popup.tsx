@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { PopupContext } from '../../contexts/PopupContext';
 import Login from './Login/Login';
 import './Popup.scss';

@@ -1,3 +1,5 @@
+@import "../../variables.scss";
+
 .loadingComponent {
   width: 100vw;
   height: 100vh;
@@ -30,6 +32,11 @@
 .lds-roller div {
   animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   transform-origin: 40px 40px;
+  &:nth-child(even) {
+    &::after {
+      background-color: $purple-color;
+    }
+  }
 }
 .lds-roller div:after {
   content: " ";

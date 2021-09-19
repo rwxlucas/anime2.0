@@ -1,4 +1,5 @@
 @import url('https://use.fontawesome.com/releases/v5.2.0/css/all.css');
+@import './variables.scss';
 
 * {
 	padding: 0px;
@@ -7,5 +8,5 @@
 }
 
 body, html {
-	background-color: #111;
+	background-color: $bgColor;
 }

@@ -1,20 +1,44 @@
-.dark {
-	background-color: #222;
+@import '../../variables.scss';
+
+.inputComponent {
+	position: relative;
+}
+
+.showEye {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: 10px;
+	> i {
+		font-size: 18px;
+		&:hover {
+			cursor: pointer;
+			color: $purple-color;
+		}
+	}
+}
+
+.darkInput {
+	background-color: #111;
 	color: #fff;
 	&::placeholder{
 		color: #fff;
 	}
 	&:focus {
-		border-bottom: 2px solid #fff;
+		border-bottom: 2px solid $purple-color-hover;
 	}
 }
 
-.light {
+.lightInput {
 	background-color: #888;
-	color: #222;
+	color: #111;
 }
 
-.text {
+.text, .password {
 	height: 100%;
 	width: 100%;
 	padding: 10px 5px;
