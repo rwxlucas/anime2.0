@@ -74,17 +74,22 @@ const Login = () => {
 	}
 
 	const execButtonFunctions = () => buttonFunctions[mode]();
+	
+	const changeMode = (mode: string) => {
+		['username', 'password', 'email'].forEach(item => resetForm[item]());
+		setMode(mode);
+	}
 
 	return (
 		<div className={'login'} >
 			<div><i onClick={() => setPopup('')} className={"fas fa-times"}></i></div>
 			<div>{titleText[mode]}</div>
 			{renderInputComponents()}
-			<div><Button text={buttonText[mode]} className={'purpleButton'} exec={() => execButtonFunctions()} /></div>
+			<div><Button text={buttonText[mode]} className={'purpleButton'} exec={execButtonFunctions} /></div>
 			<div>
-				{mode === 'register' || mode === 'remember' ? <div onClick={() => setMode('login')} >Entrar</div> : null}
-				{mode === 'login' ? <div onClick={() => setMode('register')} >Registrar</div> : null}
-				<div onClick={() => setMode('remember')} >Perdeu sua senha?</div>
+				{mode === 'register' || mode === 'remember' ? <div onClick={() => changeMode('login')} >Entrar</div> : null}
+				{mode === 'login' ? <div onClick={() => changeMode('register')} >Registrar</div> : null}
+				<div onClick={() => changeMode('remember')} >Perdeu sua senha?</div>
 			</div>
 		</div>
 	)
