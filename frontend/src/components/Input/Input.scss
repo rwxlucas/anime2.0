@@ -1,7 +1,10 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .inputComponent {
 	position: relative;
+	> input {
+		z-index: 10;
+	}
 }
 
 .showEye {
@@ -25,8 +28,8 @@
 .darkInput {
 	background-color: #111;
 	color: #fff;
-	&::placeholder{
-		color: #fff;
+	&::placeholder {
+		color: gray;
 	}
 	&:focus {
 		border-bottom: 2px solid $purple-color-hover;
@@ -38,10 +41,24 @@
 	color: #111;
 }
 
-.text, .password {
+.text,
+.password {
 	height: 100%;
 	width: 100%;
 	padding: 10px 5px;
 	border: 2px solid transparent;
 	outline: none;
+}
+
+.error {
+	position: relative;
+	height: 0px;
+	visibility: hidden;
+	padding-top: 5px;
+	font-size: 12px;
+	color: $purple-color;
+	&.showErr {
+		height: auto;
+		visibility: visible;
+	}
 }

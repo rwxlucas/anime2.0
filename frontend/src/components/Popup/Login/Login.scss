@@ -24,7 +24,7 @@
 		}
 		&:nth-child(3) {
 			> div {
-				height: 40px;
+				min-height: 40px;
 				&:not(:last-of-type) {
 					margin-bottom: 5px;
 				}
