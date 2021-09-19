@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import PopupContext from '../../contexts/PopupContext';
+import { PopupContext } from '../../contexts/PopupContext';
 import Input from '../Input/Input';
 import './Navbar.scss';
 
@@ -16,7 +16,7 @@ export const Navbar = () => {
 
 			<div className={'navbarComponent-searchLog'} >
 				<div>
-					<Input value={searchText} type={'text'} className={'dark'} placeholder={'Search'} />
+					<Input value={searchText} setValue={setSearchText} type={'text'} className={'dark'} placeholder={'Search'} />
 				</div>
 				<div></div>
 				<div>

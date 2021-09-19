@@ -1,10 +1,16 @@
-import { createContext } from "react"
+import { createContext, useState } from "react"
 
 interface ILoadingContext {
 	loading: boolean;
 	setLoading: Function;
 }
 
-const LoadingContext = createContext({} as ILoadingContext);
+export const LoadingContext = createContext({} as ILoadingContext);
 
-export default LoadingContext;
+const LoadingProvider = (props: any) => {
+	const [loading, setLoading] = useState<boolean>(false);
+	return <LoadingContext.Provider value={{ loading, setLoading }}>
+		{props.children}
+	</LoadingContext.Provider>
+}
+export default LoadingProvider;

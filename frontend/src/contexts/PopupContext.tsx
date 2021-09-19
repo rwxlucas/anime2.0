@@ -1,10 +1,17 @@
-import { createContext } from "react"
+import { createContext, useState } from "react"
 
 interface IPopupContext {
 	popup: string;
 	setPopup: Function;
 }
 
-const PopupContext = createContext({} as IPopupContext);
+export const PopupContext = createContext({} as IPopupContext);
 
-export default PopupContext
+const PopupProvider = (props: any) => {
+	const [popup, setPopup] = useState<string>('');
+	return <PopupContext.Provider value={{ popup, setPopup }}>
+		{props.children}
+	</PopupContext.Provider>
+}
+
+export default PopupProvider;
