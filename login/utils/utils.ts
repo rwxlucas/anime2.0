@@ -1,8 +1,8 @@
 import { resType } from "./types"
 
-export const makeResponse = (status: number, data?: any): resType => {
+export const makeResponse = (status: number, response?: { message?: string, data?: any }): resType => {
 	return {
 		status,
-		data
+		response
 	}
 }

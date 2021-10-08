@@ -1,6 +1,6 @@
 export interface resType {
 	status: number;
-	data?: {
+	response?: {
 		message?: string;
 		data?: any
 	}
