@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
+import { signIn } from '../services/auth';
 
 const signin = (req: Request, res: Response) => {
 	const { body } = req;
-	console.log(body);
-	return res.send();
+	const response = signIn(body);
+	return res.status(response.status).json(response.data);
 }
 
 export default {
