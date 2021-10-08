@@ -1,6 +1,12 @@
 import express from 'express';
-import cors from 'cors';
+import env from './config/index';
+import loaders from './loaders/index';
 
-const app = express();
+const startServer = async () => {
+	console.log(`Login initialized`);
+	const app = express();
+	await loaders({ expressApp: app });
+	app.listen(env.serverPort, () => console.log(`Server started on port ${env.serverPort}`));
+}
 
-app.use(cors());
+startServer();

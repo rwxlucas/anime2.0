@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, ResponseType, AxiosResponse } from 'axios';
 
 const makeUrl = (url: string, path: string) => {
 	return `${url}/${path}`;

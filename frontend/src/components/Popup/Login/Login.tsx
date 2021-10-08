@@ -41,9 +41,9 @@ const Login = () => {
 			return;
 		}
 		setLoading(true);
-		const res = await login(username, password).catch(err => console.log(err));
+		const res = await login(username, password).catch(err => err);
 		if (res) {
-			console.log(res);
+			console.log(res.response);
 		}
 		setPopup('');
 		setLoading(false);
