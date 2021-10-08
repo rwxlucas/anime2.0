@@ -1,12 +1,19 @@
 import { Request, Response } from 'express';
-import { signIn } from '../services/auth';
+import auth from '../services/auth';
 
-const signin = (req: Request, res: Response) => {
+const signIn = async (req: Request, res: Response) => {
 	const { body } = req;
-	const controller = signIn(body);
+	const controller = await auth.signIn(body);
+	return res.status(controller.status).json(controller.response);
+}
+
+const signUp = async (req: Request, res: Response) => {
+	const { body } = req;
+	const controller = await auth.signUp(body);
 	return res.status(controller.status).json(controller.response);
 }
 
 export default {
-	signin
+	signIn,
+	signUp
 }
