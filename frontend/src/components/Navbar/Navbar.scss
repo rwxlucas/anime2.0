@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 .navbarComponent {
 	height: $navbar-height;
 	background-color: $bgColor;
@@ -33,16 +33,30 @@
 		justify-content: center;
 		gap: 15px;
 		height: 30px;
-		> div {
-			&:nth-child(2) {
-				height: 100%;
-				border: 1px solid #fff;
-			}
-			&:nth-child(3){
+		&-border {
+			height: 100%;
+			border: 1px solid #fff;
+		}
+		&-menuUser {
+			> i {
 				font-size: 22px;
-				&:hover {
-					cursor: pointer;
+			}
+			&:hover {
+				cursor: pointer;
+				> i {
 					color: $purple-color-hover;
+				}
+				> div {
+					color: $purple-color-hover;
+					text-decoration: underline;
+				}
+			}
+		}
+		&-logout {
+			&:hover {
+				> i {
+					color: $purple-color-hover;
+					cursor: pointer;
 				}
 			}
 		}

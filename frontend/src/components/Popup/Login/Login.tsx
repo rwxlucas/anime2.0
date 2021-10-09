@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { AuthContext } from '../../../contexts/AuthContext';
 import { LoadingContext } from '../../../contexts/LoadingContext';
 import { PopupContext } from '../../../contexts/PopupContext';
 import { login } from '../../../services/authService';
@@ -10,6 +11,7 @@ import './Login.scss';
 const Login = () => {
 	const { setPopup } = useContext(PopupContext);
 	const { setLoading } = useContext(LoadingContext);
+	const { setAuth } = useContext(AuthContext);
 	const [username, setUsername] = useState<string>('');
 	const [usernameErr, setUsernameErr] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
@@ -36,17 +38,25 @@ const Login = () => {
 			if (!username) setUsernameErr('Necessário inserir email!');
 			if (!password) setPasswordErr('Necessário inserir uma senha!');
 			await timer(2000);
-			setUsernameErr('');
-			setPasswordErr('');
+			['username', 'password'].forEach(item => resetForm[item]());
 			return;
 		}
 		setLoading(true);
 		const res = await login(username, password).catch(err => err);
-		if (res) {
-			console.log(res.response);
+		if (res.response) {
+			setLoading(false);
+			const { message } = res.response.data;
+			if (message === 'Incorrect password') setPasswordErr('Senha incorreta');
+			if (message === 'Incorrect username') setUsernameErr('Usuário incorreto');
+			await timer(2000);
+			return;
 		}
-		setPopup('');
-		setLoading(false);
+		const { data } = res.data;
+		if (data) {
+			setAuth(data);
+			setPopup('');
+			setLoading(false);
+		}
 	}
 	const register = async () => {
 		['username', 'password', 'email'].forEach(item => resetForm[item]());
@@ -74,7 +84,7 @@ const Login = () => {
 	}
 
 	const execButtonFunctions = () => buttonFunctions[mode]();
-	
+
 	const changeMode = (mode: string) => {
 		['username', 'password', 'email'].forEach(item => resetForm[item]());
 		setMode(mode);
