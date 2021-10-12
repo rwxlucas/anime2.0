@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { SyntheticEvent, useContext, useState } from 'react';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { LoadingContext } from '../../../contexts/LoadingContext';
 import { PopupContext } from '../../../contexts/PopupContext';
-import { login } from '../../../services/authService';
+import { login, register } from '../../../services/authService';
 import { timer } from '../../../utils/utils';
 import Button from '../../Button/Button';
 import Input from '../../Input/Input';
@@ -17,7 +17,9 @@ const Login = () => {
 	const [password, setPassword] = useState<string>('');
 	const [passwordErr, setPasswordErr] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
+	const [emailErr, setEmailErr] = useState<string>('');
 	const [mode, setMode] = useState<string>('login');
+	const resetFormVariables = ['username', 'password', 'email', 'usernameErr', 'passwordErr', 'emailErr'];
 	const titleText: any = {
 		'login': 'Faça login na sua conta',
 		'register': 'Cadastre-se',
@@ -31,40 +33,68 @@ const Login = () => {
 	const resetForm: any = {
 		'username': () => setUsername(''),
 		'password': () => setPassword(''),
-		'email': () => setEmail('')
+		'email': () => setEmail(''),
+		'usernameErr': () => setUsernameErr(''),
+		'passwordErr': () => setPasswordErr(''),
+		'emailErr': () => setEmailErr(''),
 	}
-	const signIn = async () => {
+
+	const verifyInputsVariables = async (register?: boolean): Promise<boolean> => {
 		if (!username || !password) {
-			if (!username) setUsernameErr('Necessário inserir email!');
+			if (!username) setUsernameErr('Necessário inserir um usuário!');
 			if (!password) setPasswordErr('Necessário inserir uma senha!');
+			// if (register && !email) setEmailErr('Necessário inserir um email!');
 			await timer(2000);
-			['username', 'password'].forEach(item => resetForm[item]());
-			return;
+			resetFormVariables.forEach((item: string) => resetForm[item]());
+			return true;
 		}
+		return false;
+	}
+
+	const showResponseMsg = ({ message }: { message: string }) => {
+		const responses: { [key: string]: Function } = {
+			'Incorrect password': () => setPasswordErr('Senha incorreta'),
+			'Incorrect username': () => setUsernameErr('Usuário incorreto'),
+			'Incorrect email': () => setEmailErr('Email incorreto'),
+			'User already exists': () => setUsernameErr('Usuário já cadastrado')
+		};
+		setLoading(false);
+		if (Object.keys(responses).includes(message)) return responses[message];
+	}
+
+	const signIn = async () => {
+		if (await verifyInputsVariables()) return;
 		setLoading(true);
-		const res = await login(username, password).catch(err => err);
-		if (res.response) {
-			setLoading(false);
-			const { message } = res.response.data;
-			if (message === 'Incorrect password') setPasswordErr('Senha incorreta');
-			if (message === 'Incorrect username') setUsernameErr('Usuário incorreto');
-			await timer(2000);
+		const loginRequest = await login(username, password).catch(err => err);
+		if (loginRequest.response) {
+			showResponseMsg(loginRequest.response.data);
 			return;
 		}
-		const { data } = res.data;
+		const { data } = loginRequest.data;
 		if (data) {
 			setAuth(data);
 			setPopup('');
 			setLoading(false);
 		}
 	}
-	const register = async () => {
-		['username', 'password', 'email'].forEach(item => resetForm[item]());
+	const signUp = async () => {
+		if (await verifyInputsVariables(true)) return;
+		setLoading(true);
+		const registerRequest = await register(username, password).catch(err => err);
+		if (registerRequest.response) {
+			showResponseMsg(registerRequest.response.data);
+			return;
+		}
+		const { data } = registerRequest.data;
+		if (data) {
+			changeMode('login');
+			setLoading(false);
+		}
 	}
 
 	const buttonFunctions: any = {
 		'login': () => signIn(),
-		'register': () => register(),
+		'register': () => signUp(),
 		'remember': () => console.log('remember')
 	}
 
@@ -74,7 +104,7 @@ const Login = () => {
 				<div><Input placeholder={'Username'} value={username} setValue={setUsername} type={'text'} className={'darkInput'} err={usernameErr} /></div>
 				{
 					mode === 'register' ?
-						<div><Input placeholder={'Email'} value={email} setValue={setEmail} type={'text'} className={'darkInput'} /></div>
+						<div><Input placeholder={'Email'} value={email} setValue={setEmail} type={'text'} className={'darkInput'} err={emailErr} /></div>
 						: null
 				}
 				<div><Input placeholder={'Password'} value={password} setValue={setPassword} type={'password'} className={'darkInput'} err={passwordErr} /></div>
@@ -86,22 +116,27 @@ const Login = () => {
 	const execButtonFunctions = () => buttonFunctions[mode]();
 
 	const changeMode = (mode: string) => {
-		['username', 'password', 'email'].forEach(item => resetForm[item]());
+		resetFormVariables.forEach(item => resetForm[item]());
 		setMode(mode);
 	}
 
+	const sendRequest = (e: SyntheticEvent) => {
+		e.preventDefault();
+		execButtonFunctions();
+	}
+
 	return (
-		<div className={'login'} >
+		<form onSubmit={sendRequest} className={'login'} >
 			<div><i onClick={() => setPopup('')} className={"fas fa-times"}></i></div>
 			<div>{titleText[mode]}</div>
 			{renderInputComponents()}
-			<div><Button text={buttonText[mode]} className={'purpleButton'} exec={execButtonFunctions} /></div>
+			<div><Button text={buttonText[mode]} className={'purpleButton'} /></div>
 			<div>
 				{mode === 'register' || mode === 'remember' ? <div onClick={() => changeMode('login')} >Entrar</div> : null}
 				{mode === 'login' ? <div onClick={() => changeMode('register')} >Registrar</div> : null}
 				<div onClick={() => changeMode('remember')} >Perdeu sua senha?</div>
 			</div>
-		</div>
+		</form>
 	)
 }
 

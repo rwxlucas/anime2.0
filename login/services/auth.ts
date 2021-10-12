@@ -19,7 +19,7 @@ const signUp = async (body: { username: string, password: string }): Promise<res
 	const { username, password } = body;
 	if (!username || !password) return makeResponse(400, { message: 'Missing login parameters' });
 	const user = await User.findOne({ username });
-	if (user) return makeResponse(404, { message: 'User already exists' });
+	if (user) return makeResponse(409, { message: 'User already exists' });
 	const newUser = new User({ username, password: await bcrypt.hash(password, 12) });
 	await newUser.save().catch(err => {
 		if (err) return makeResponse(500, { message: 'Error while creating user' });
