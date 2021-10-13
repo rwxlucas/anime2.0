@@ -85,11 +85,8 @@ const Login = () => {
 			showResponseMsg(registerRequest.response.data);
 			return;
 		}
-		const { data } = registerRequest.data;
-		if (data) {
-			changeMode('login');
-			setLoading(false);
-		}
+		changeMode('login');
+		setLoading(false);
 	}
 
 	const buttonFunctions: any = {

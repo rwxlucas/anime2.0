@@ -4,7 +4,7 @@ import './MainContent.scss';
 const MainContent = () => {
 	return (
 		<div className={'mainContentPage'} >
-			teste
+			MAIN PAGE
 		</div>
 	)
 }

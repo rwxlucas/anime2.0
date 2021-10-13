@@ -1,0 +1,42 @@
+@import "../../variables.scss";
+.leftMenu {
+	position: absolute;
+	visibility: hidden;
+	width: 200px;
+	height: calc(100vh - #{$navbar-height} - 2px);
+	left: 0px;
+	bottom: calc((100vh - #{$navbar-height}) * -1);
+	background-color: #222;
+	transition: ease-in-out 0.5s all;
+	transform: translateX(-100%);
+	padding-top: 2px;
+	z-index: 10;
+	&.open {
+		transform: translateX(0);
+		visibility: visible;
+	}
+	> div {
+		height: 40px;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		padding: 10px 0px;
+		padding-left: 15px;
+		&:hover {
+			background-color: #333;
+			cursor: pointer;
+		}
+		> i,
+		> div {
+			font-size: 18px;
+			color: #888;
+			&:hover {
+				color: #fff;
+			}
+		}
+		> i {
+			margin-right: 20px;
+		}
+	}
+}
