@@ -13,7 +13,14 @@ const signUp = async (req: Request, res: Response) => {
 	return res.status(controller.status).json(controller.response);
 }
 
+const setImage = async (req: Request, res: Response) => {
+	const { body, file } = req;
+	const controller = await auth.setImage(body, file!);
+	return res.status(controller.status).json(controller.response);
+}
+
 export default {
 	signIn,
-	signUp
+	signUp,
+	setImage
 }

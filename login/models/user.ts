@@ -4,6 +4,7 @@ interface User extends Document {
 	username: string;
 	password: string;
 	email?: string;
+	image?: string;
 }
 
 const userSchema = new Schema<User>({

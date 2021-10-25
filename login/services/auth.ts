@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/user';
 import env from '../config/index';
 import bcrypt from 'bcrypt';
+import { uploadFile } from './aws';
 
 const signIn = async (body: { username: string, password: string }): Promise<resType> => {
 	const { username, password } = body;
@@ -27,7 +28,24 @@ const signUp = async (body: { username: string, password: string }): Promise<res
 	return makeResponse(200, { message: 'User created' });
 }
 
+const setImage = async (body: { username: string }, file: Express.Multer.File): Promise<resType> => {
+	const { username } = body;
+	if (!username) return makeResponse(400, { message: 'Missing username' });
+	const user = await User.findOne({ username });
+	if (!user) return makeResponse(404, { message: 'User not found' });
+	if (!file) return makeResponse(404, { message: 'Missing image' });
+	const userImage = await uploadFile(file, `${user.username}-profileImage`).catch(err => {
+		if (err) return makeResponse(500, { message: err });
+	});
+	user.image = userImage.Location;
+	await user.save().catch(err => {
+		if (err) return makeResponse(500, { message: err });
+	});
+	return makeResponse(200, { message: 'Success' });
+}
+
 export default {
 	signIn,
-	signUp
+	signUp,
+	setImage
 }
