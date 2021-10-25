@@ -4,6 +4,5 @@ import jwt from 'jsonwebtoken';
 export const verifyJwt = (req: Request, res: Response, next: NextFunction) => {
 	const xauthorization: string = (<any>req.headers).xauthorization as string;
 	if (!xauthorization) return res.status(403).json({ message: 'Token not provided' });
-
 	next();
 }

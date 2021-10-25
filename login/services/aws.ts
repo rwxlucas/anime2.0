@@ -29,3 +29,10 @@ export const uploadFile = async (file: any, name: string): Promise<any> => {
     Key: `${name}.${fileType[file.mimetype]}`
   }).promise();
 }
+
+export const deleteFile = async (key: string): Promise<any> => {
+  return await S3Client.deleteObject({
+    Bucket: config.bucket,
+    Key: key
+  }).promise();
+}

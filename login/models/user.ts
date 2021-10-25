@@ -1,10 +1,14 @@
 import { Schema, Document, model } from "mongoose";
 
+interface IUserImage {
+	key: string;
+	location: string;
+}
 interface User extends Document {
 	username: string;
 	password: string;
 	email?: string;
-	image?: string;
+	image?: IUserImage;
 }
 
 const userSchema = new Schema<User>({
@@ -20,8 +24,16 @@ const userSchema = new Schema<User>({
 	email: {
 		type: String,
 		required: false
+	},
+	image: {
+		type: {
+			key: String,
+			location: String
+		},
+		required: false,
+		_id: false
 	}
-})
+});
 
 const userModel = model<User>('user', userSchema);
 

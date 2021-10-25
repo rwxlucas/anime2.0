@@ -19,8 +19,15 @@ const setImage = async (req: Request, res: Response) => {
 	return res.status(controller.status).json(controller.response);
 }
 
+const deleteImage = async (req: Request, res: Response) => {
+	const { body } = req;
+	const controller = await auth.deleteImage(body);
+	return res.status(controller.status).json(controller.response);
+}
+
 export default {
 	signIn,
 	signUp,
-	setImage
+	setImage,
+	deleteImage
 }
