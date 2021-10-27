@@ -33,11 +33,11 @@ const Account = () => {
 								</div>
 								<div>
 									<p>Email:</p>
-									<div><Input value={'lucasfjb.dev@gmail.com'} setValue={() => null} type={'input'} className={'darkInput'} /></div>
+									<div><Input value={'opaUmEmailAi@gmail.com'} setValue={() => null} type={'input'} className={'darkInput'} /></div>
 								</div>
 								<div>
 									<p>Phone:</p>
-									<div><Input value={'+55 (31) 9 9275-4138'} setValue={() => null} type={'input'} className={'darkInput'} /></div>
+									<div><Input value={'+55 (31) 9 9325-1134'} setValue={() => null} type={'input'} className={'darkInput'} /></div>
 								</div>
 								<div>
 									<p>Description:</p>
