@@ -27,8 +27,8 @@ export const Navbar = () => {
 			<div className={'navbarComponent-hamburger'} > <Hamburger open={openMenu} setOpen={setOpenMenu} /> </div>
 			<div className={'navbarComponent-logo'} onClick={goToMain} >animesOnline</div>
 			<div className={'navbarComponent-searchLog'} >
-				<div  >
-					<Input value={searchText} setValue={setSearchText} type={'text'} className={'dark'} placeholder={'Search'} />
+				<div className={'navbarComponent-searchLog-searchInput'} >
+					<Input value={searchText} setValue={setSearchText} type={'text'} className={'lightInput'} placeholder={'Search'} />
 				</div>
 				<div className={'navbarComponent-searchLog-border'} ></div>
 				<div className={'navbarComponent-searchLog-menuUser'} >

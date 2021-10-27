@@ -1,3 +1,103 @@
+@import "../../variables.scss";
 .accountPage {
 	color: #fff;
+	padding: 0 100px;
+	&-mainContent {
+		background-color: #222;
+		margin-top: 30px;
+		height: calc(100vh - 60px - #{$navbar-height});
+		width: 100%;
+		padding: 20px;
+		display: flex;
+		flex-direction: row;
+		overflow: hidden;
+		&-updateOption {
+			background-color: #222;
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			width: max-content;
+		}
+		&-title {
+			margin-bottom: 15px;
+			> p {
+				font-size: 26px;
+				border-bottom: 2px solid $purple-color;
+				width: max-content;
+			}
+		}
+
+		&-form {
+			> div {
+				&:not(:last-of-type) {
+					margin-bottom: 15px;
+				}
+				&.profileImage {
+					> div {
+						&:first-of-type {
+							display: inline-flex;
+							justify-content: space-between;
+							> p {
+								font-size: 20px;
+								margin-bottom: 5px;
+							}
+							> label {
+								> input {
+									display: none;
+								}
+								> p {
+									font-size: 18px;
+									margin-top: 2px;
+									border-bottom: 2px solid $purple-color;
+									width: max-content;
+									&:hover {
+										color: $purple-color;
+										cursor: pointer;
+									}
+								}
+							}
+						}
+						&:last-of-type {
+							// margin-top: 10px;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							overflow: hidden;
+							background-color: #111;
+							width: 250px;
+							height: 250px;
+							border-radius: 100%;
+							> img {
+								height: 100%;
+							}
+						}
+					}
+				}
+				> p {
+					font-size: 20px;
+					margin-bottom: 5px;
+				}
+				> div {
+					width: 250px;
+					height: 40px;
+				}
+			}
+		}
+
+		&-button {
+			margin-top: auto;
+			width: 250px;
+			height: 40px;
+		}
+
+		&-options {
+			margin-left: 30px;
+			display: flex;
+			> div {
+				width: 150px;
+				height: 40px;
+			}
+		}
+	}
 }

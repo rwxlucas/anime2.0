@@ -32,7 +32,7 @@ const setImage = async (body: { username: string }, file: Express.Multer.File): 
 	const user = await User.findOne({ username });
 	if (!user) return makeResponse(404, { message: 'User not found' });
 	if (!file) return makeResponse(404, { message: 'Missing image' });
-	const userImage = await uploadFile(file, `${user.username}-profileImage`).catch(err => (makeResponse(500, { message: err })));
+	const userImage = await uploadFile(file, 'profileImage', `${user.username}-profileImage`).catch(err => (makeResponse(500, { message: err })));
 	user.image = {
 		location: userImage.Location,
 		key: userImage.Key

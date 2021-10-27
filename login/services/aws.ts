@@ -22,11 +22,11 @@ const config: IConfig = {
 
 const S3Client = new S3(config);
 
-export const uploadFile = async (file: any, name: string): Promise<any> => {
+export const uploadFile = async (file: any, folder: string, name: string): Promise<any> => {
   return await S3Client.upload({
     Bucket: config.bucket,
     Body: file.buffer,
-    Key: `${name}.${fileType[file.mimetype]}`
+    Key: `profileImages/${name}.${fileType[file.mimetype]}`
   }).promise();
 }
 

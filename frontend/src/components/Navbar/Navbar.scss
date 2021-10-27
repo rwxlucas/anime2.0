@@ -38,6 +38,10 @@
 		justify-content: center;
 		gap: 15px;
 		height: 30px;
+		&-searchInput{
+			height: 40px;
+			width: 250px;
+		}
 		&-border {
 			height: 100%;
 			border: 1px solid #fff;
