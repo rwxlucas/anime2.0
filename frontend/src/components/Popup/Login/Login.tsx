@@ -43,7 +43,6 @@ const Login = () => {
 		if (!username || !password) {
 			if (!username) setUsernameErr('Necessário inserir um usuário!');
 			if (!password) setPasswordErr('Necessário inserir uma senha!');
-			// if (register && !email) setEmailErr('Necessário inserir um email!');
 			await timer(2000);
 			resetFormVariables.forEach((item: string) => resetForm[item]());
 			return true;
