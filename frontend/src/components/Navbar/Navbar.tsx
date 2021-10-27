@@ -19,11 +19,14 @@ export const Navbar = () => {
 	const goToAccount = () => history.push('/account');
 	const goToMain = () => history.push('/');
 
-	const menuOptions = [{ icon: 'fas fa-home', name: 'Menu', exec: () => alert('teste') }]
+	const menuOptions = [
+		{ icon: 'fas fa-home', name: 'Menu', exec: () => goToMain() },
+		{ icon: 'fas fa-edit', name: 'Profile', exec: () => goToAccount() }
+	]
 
 	return (
 		<nav className={'navbarComponent'} >
-			<Menu openMenu={openMenu} options={menuOptions} />
+			<Menu openMenu={openMenu} options={menuOptions} setOpenMenu={setOpenMenu} />
 			<div className={'navbarComponent-hamburger'} > <Hamburger open={openMenu} setOpen={setOpenMenu} /> </div>
 			<div className={'navbarComponent-logo'} onClick={goToMain} >animesOnline</div>
 			<div className={'navbarComponent-searchLog'} >

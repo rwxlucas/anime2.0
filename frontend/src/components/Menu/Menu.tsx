@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Menu.scss';
 
 interface IOptions {
@@ -10,9 +10,11 @@ interface IOptions {
 interface IMenu {
 	options: IOptions[];
 	openMenu: boolean;
+	setOpenMenu: Function;
 }
 
-const Menu = ({ openMenu, options }: IMenu) => {
+const Menu = ({ openMenu, setOpenMenu, options }: IMenu) => {
+
 	return (
 		<div className={`leftMenu ${openMenu ? 'open' : ''}`} >
 			{
@@ -21,6 +23,7 @@ const Menu = ({ openMenu, options }: IMenu) => {
 					<div>{item.name}</div>
 				</div>) : null
 			}
+			<div className={'close'} onClick={() => setOpenMenu(false)} ></div>
 		</div >
 	)
 }
