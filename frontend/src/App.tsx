@@ -20,7 +20,7 @@ function App() {
   }, [setAuth]);
 
   return (
-    <div className="App">
+    <div className={`App ${popup ? 'popupHandler' : ''}`}  >
       {popup ? <Popup /> : null}
       {loading ? <Loading /> : null}
       <Router>

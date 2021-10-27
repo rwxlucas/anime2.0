@@ -1,6 +1,8 @@
 .popupDiv {
-	width: 100vw;
+	width: 100%;
 	height: 100vh;
+	top: 0px;
+	left: 0px;
 	position: absolute;
 	display: flex;
 	justify-content: center;
@@ -10,8 +12,8 @@
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	width: 100vw;
-	height: 100vh;
+	width: 100%;
+	height: 100%;
   background: rgba(0, 0, 0, 0.6);
 }
 
@@ -20,7 +22,7 @@
 	z-index: 100;
 	transition: ease-in-out 0.5s transform;
 	height: max-content;
-	transform: translateY(-100vh);
+	transform: translateY(-100%);
 	&.show {
 		transform: translateY(30%);
 	}
