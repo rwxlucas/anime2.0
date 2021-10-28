@@ -6,6 +6,12 @@ import './Account.scss';
 const Account = () => {
 
 	const [option, setOption] = useState<boolean>(true);
+	const [diplayName, setDisplayName] = useState<string>('');
+	const [email, setEmail] = useState<string>('');
+	const [phone, setPhone] = useState<string>('');
+	const [description, setDescription] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
+	const [passwordAgain, setPasswordAgain] = useState<string>('');
 
 	const saveAccountFunction = () => {
 		if (option) alert('update');
@@ -29,19 +35,19 @@ const Account = () => {
 								</div>
 								<div>
 									<p>Display name:</p>
-									<div><Input value={'Lucas Faria'} setValue={() => null} type={'input'} className={'darkInput'} /></div>
+									<div><Input value={diplayName} setValue={setDisplayName} type={'input'} className={'darkInput'} /></div>
 								</div>
 								<div>
 									<p>Email:</p>
-									<div><Input value={'opaUmEmailAi@gmail.com'} setValue={() => null} type={'input'} className={'darkInput'} /></div>
+									<div><Input value={email} setValue={setEmail} type={'input'} className={'darkInput'} /></div>
 								</div>
 								<div>
 									<p>Phone:</p>
-									<div><Input value={'+55 (31) 9 9325-1134'} setValue={() => null} type={'input'} className={'darkInput'} /></div>
+									<div><Input value={phone} setValue={setPhone} type={'input'} className={'darkInput'} /></div>
 								</div>
 								<div>
 									<p>Description:</p>
-									<div><Input value={'I am a person.'} setValue={() => null} type={'input'} className={'darkInput'} /></div>
+									<div><Input value={description} setValue={setDescription} type={'input'} className={'darkInput'} /></div>
 								</div>
 								<div className={'profileImage'}>
 									<div>
@@ -58,11 +64,11 @@ const Account = () => {
 							</> : <>
 								<div>
 									<p>New password:</p>
-									<div><Input value={'lucas'} setValue={() => null} type={'password'} className={'darkInput'} /></div>
+									<div><Input value={password} setValue={setPassword} type={'password'} className={'darkInput'} /></div>
 								</div>
 								<div>
 									<p>New password again:</p>
-									<div><Input value={'Lucas Faria'} setValue={() => null} type={'password'} className={'darkInput'} /></div>
+									<div><Input value={passwordAgain} setValue={setPasswordAgain} type={'password'} className={'darkInput'} /></div>
 								</div>
 							</>
 						}
@@ -75,7 +81,7 @@ const Account = () => {
 
 				<div className={'accountPage-mainContent-options'} >
 					<div>
-						<Button text={`${option ? 'Change password' : 'Change user info'}`} className={'purpleButton'} exec={() => setOption(!option)} />
+						<Button text={`${option ? 'Change password' : 'Change profile'}`} className={'purpleButton'} exec={() => setOption(!option)} />
 					</div>
 				</div>
 			</div>
