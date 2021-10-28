@@ -6,6 +6,13 @@ import env from '../config/index';
 import bcrypt from 'bcrypt';
 import { deleteFile, uploadFile } from './aws';
 
+interface IUpdateProfile {
+	displayName?: string;
+	email?: string;
+	phone?: string;
+	description?: string;
+}
+
 const signIn = async (body: { username: string, password: string }): Promise<resType> => {
 	const { username, password } = body;
 	if (!username || !password) return makeResponse(400, { message: 'Missing login parameters' });
@@ -64,10 +71,18 @@ const addEmail = async (body: { username: string, email: string }): Promise<resT
 	return makeResponse(200, { message: 'Email added successfully' });
 }
 
+
+const updateUserProfile = async (body: IUpdateProfile, username: string): Promise<resType> => {
+	const { description, displayName, email, phone } = body;
+	const user = await User.findOne({ username });
+	return makeResponse(200, { message: 'Sucess' });
+}
+
 export default {
 	signIn,
 	signUp,
 	setImage,
 	deleteImage,
-	addEmail
+	addEmail,
+	updateUserProfile
 }

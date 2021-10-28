@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { IHeaders } from '../middlewares/verifyJwt';
 import auth from '../services/auth';
 
 const signIn = async (req: Request, res: Response) => {
@@ -25,9 +26,16 @@ const deleteImage = async (req: Request, res: Response) => {
 	return res.status(controller.status).json(controller.response);
 }
 
+const updateProfile = async (req: Request, res: Response) => {
+	const { body } = req;
+	const controller = await auth.updateUserProfile(body, (<IHeaders>req.headers).username!);
+	return res.status(controller.status).json(controller.response);
+}
+
 export default {
 	signIn,
 	signUp,
 	setImage,
-	deleteImage
+	deleteImage,
+	updateProfile
 }
