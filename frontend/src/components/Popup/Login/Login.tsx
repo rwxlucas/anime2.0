@@ -20,17 +20,17 @@ const Login = () => {
 	const [emailErr, setEmailErr] = useState<string>('');
 	const [mode, setMode] = useState<string>('login');
 	const resetFormVariables = ['username', 'password', 'email', 'usernameErr', 'passwordErr', 'emailErr'];
-	const titleText: any = {
+	const titleText: { [buttonType: string]: string } = {
 		'login': 'Faça login na sua conta',
 		'register': 'Cadastre-se',
 		'remember': 'Digite seu email para recuperar sua conta'
 	}
-	const buttonText: any = {
+	const buttonText: { [buttonType: string]: string } = {
 		'login': 'Entrar',
 		'register': 'Registar',
 		'remember': 'Enviar email'
 	}
-	const resetForm: any = {
+	const resetForm: { [formReferenceKey: string]: Function } = {
 		'username': () => setUsername(''),
 		'password': () => setPassword(''),
 		'email': () => setEmail(''),
@@ -51,7 +51,7 @@ const Login = () => {
 	}
 
 	const showResponseMsg = ({ message }: { message: string }) => {
-		const responses: { [key: string]: Function } = {
+		const responses: { [responseMethods: string]: Function } = {
 			'Incorrect password': () => setPasswordErr('Senha incorreta'),
 			'Incorrect username': () => setUsernameErr('Usuário incorreto'),
 			'Incorrect email': () => setEmailErr('Email incorreto'),

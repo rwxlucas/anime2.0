@@ -33,8 +33,7 @@ const signUp = async (body: { username: string, password: string }): Promise<res
 	return makeResponse(200, { message: 'User created' });
 }
 
-const setImage = async (body: { username: string }, file: Express.Multer.File): Promise<resType> => {
-	const { username } = body;
+const setImage = async (username: string, file: Express.Multer.File): Promise<resType> => {
 	if (!username) return makeResponse(400, { message: 'Missing username' });
 	const user = await User.findOne({ username });
 	if (!user) return makeResponse(404, { message: 'User not found' });
@@ -45,7 +44,8 @@ const setImage = async (body: { username: string }, file: Express.Multer.File): 
 		key: userImage.Key
 	};
 	await user.save().catch(err => (makeResponse(500, { message: err })));
-	return makeResponse(200, { message: 'Success' });
+	const base64Image = file.buffer.toString('base64');
+	return makeResponse(200, { message: 'Success', data: `data:${file.mimetype};base64, ${base64Image}` });
 }
 
 const deleteImage = async (body: { username: string }): Promise<resType> => {
@@ -85,7 +85,7 @@ const updateUserProfile = async (body: IUpdateProfile, username: string): Promis
 		displayName,
 		email
 	}).catch(err => (makeResponse(500, { message: err.message })));
-	return makeResponse(200, { message: 'Success' });
+	return makeResponse(200, { message: 'Success', data: { description, displayName, email, phone } });
 }
 
 const verifyAuthorization = async (username: string): Promise<resType> => {

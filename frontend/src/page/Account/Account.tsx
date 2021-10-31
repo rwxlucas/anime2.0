@@ -1,22 +1,75 @@
-import { useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
+import { AuthContext } from '../../contexts/AuthContext';
+import { UserContext } from '../../contexts/UserContext';
+import { setImage, updateAccountInfo } from '../../services/authService';
 import './Account.scss';
+
 
 const Account = () => {
 
 	const [option, setOption] = useState<boolean>(true);
-	const [diplayName, setDisplayName] = useState<string>('');
+	const [displayUserImage, setDisplayUserImage] = useState<string>('');
+	const [displayName, setDisplayName] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 	const [phone, setPhone] = useState<string>('');
 	const [description, setDescription] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [passwordAgain, setPasswordAgain] = useState<string>('');
+	const { auth } = useContext(AuthContext);
+	const { user, setUser } = useContext(UserContext);
+	const profileImageRef = useRef<HTMLInputElement>(null);
+	const [userImage, setUserImage] = useState<File | null>(null);
 
-	const saveAccountFunction = () => {
-		if (option) alert('update');
+	const updateFunction = async () => {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const updateUser = await updateAccountInfo({ email, phone, description, displayName }, auth)
+					.catch((error) => console.log(error.response.data.message));
+				if (updateUser) {
+					const { data } = updateUser;
+					setUser({ ...user, data });
+				}
+				if (userImage) {
+					const formData = new FormData();
+					formData.append("image", userImage);
+					try {
+						await setImage(formData, auth)
+							.then(async (res) => {
+								if (res.status === 200) {
+									setDisplayUserImage(res.data.data);
+								}
+							})
+							.catch(error => console.log(error));
+					} catch (error) {
+						console.log(error);
+					}
+				}
+				return resolve(true);
+			} catch (error) {
+				return resolve(false);
+			}
+		})
+	}
+
+	const getProfileImage = () => {
+		const imageFile = profileImageRef.current?.files?.item(0);
+		if (imageFile) setUserImage(imageFile);
+	}
+
+	const saveAccountFunction = async () => {
+		if (option) await updateFunction();
 		else alert('change password');
 	}
+
+	useEffect(() => {
+		if (user.description) setDescription(user.description);
+		if (user.email) setEmail(user.email);
+		if (user.displayName) setDisplayName(user.displayName);
+		if (user.phone) setPhone(user.phone);
+	}, [user]);
+
 
 	return (
 		<div className={'accountPage'} >
@@ -35,7 +88,7 @@ const Account = () => {
 								</div>
 								<div>
 									<p>Display name:</p>
-									<div><Input value={diplayName} setValue={setDisplayName} type={'input'} className={'darkInput'} /></div>
+									<div><Input value={displayName} setValue={setDisplayName} type={'input'} className={'darkInput'} /></div>
 								</div>
 								<div>
 									<p>Email:</p>
@@ -53,12 +106,12 @@ const Account = () => {
 									<div>
 										<p>Profile Image</p>
 										<label>
-											<input type="file" />
+											<input type="file" name="profileImage" onChange={getProfileImage} ref={profileImageRef} />
 											<p>Select image</p>
 										</label>
 									</div>
 									<div>
-										<img src="https://www.pixsy.com/wp-content/uploads/2021/04/ben-sweet-2LowviVHZ-E-unsplash-1.jpeg" alt="teste" />
+										{displayUserImage ? <img src={displayUserImage} alt={`${displayName} profile image`} /> : null}
 									</div>
 								</div>
 							</> : <>

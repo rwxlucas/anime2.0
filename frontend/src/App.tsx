@@ -11,17 +11,23 @@ import Account from './page/Account/Account';
 import { verifyAuthorization } from './services/authService';
 
 import './App.scss';
+import { UserContext } from './contexts/UserContext';
 function App() {
   const { popup } = useContext(PopupContext);
   const { loading } = useContext(LoadingContext);
   const { setAuth, auth } = useContext(AuthContext);
-
+  const { setUser } = useContext(UserContext);
 
   useEffect(() => {
     if (localStorage.getItem("xauthorization")) setAuth(localStorage.getItem("xauthorization"));
     if (auth) {
       verifyAuthorization(auth).then((response) => {
-        if (response.status !== 200) setAuth('');
+        if (response.status !== 200) {
+          setAuth('');
+        } else {
+          const { data: { data } } = response;
+          setUser(data);
+        }
       }).catch(() => {
         setAuth('');
       });

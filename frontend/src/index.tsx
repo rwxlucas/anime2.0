@@ -4,15 +4,18 @@ import App from './App';
 import LoadingProvider from './contexts/LoadingContext';
 import PopupProvider from './contexts/PopupContext';
 import AuthProvider from './contexts/AuthContext';
+import UserProvider from './contexts/UserContext';
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
-      <LoadingProvider>
-        <PopupProvider>
-          <App />
-        </PopupProvider>
-      </LoadingProvider>
+      <UserProvider>
+        <LoadingProvider>
+          <PopupProvider>
+            <App />
+          </PopupProvider>
+        </LoadingProvider>
+      </UserProvider>
     </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')

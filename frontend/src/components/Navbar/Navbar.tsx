@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useContext, useState } from 'react';
 import { useHistory } from 'react-router';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -10,13 +10,18 @@ import './Navbar.scss';
 
 export const Navbar = () => {
 	const { setPopup } = useContext(PopupContext);
-	const { setAuth } = useContext(AuthContext);
+	const { setAuth, auth } = useContext(AuthContext);
 	const [searchText, setSearchText] = useState<string>('');
-	const { auth } = useContext(AuthContext);
 	const history = useHistory();
 	const [openMenu, setOpenMenu] = useState<boolean>(false);
 
-	const goToAccount = () => history.push('/account');
+	const goToAccount = () => {
+		if (!auth) {
+			setPopup('login');
+			return null;
+		}
+		history.push('/account');
+	}
 	const goToMain = () => history.push('/');
 
 	const menuOptions = [
