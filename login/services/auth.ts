@@ -1,5 +1,5 @@
 import { resType } from "../utils/types";
-import { makeResponse } from "../utils/utils";
+import { makeResponse, verifyEmail } from "../utils/utils";
 import jwt from 'jsonwebtoken';
 import User from '../models/user';
 import env from '../config/index';
@@ -7,10 +7,10 @@ import bcrypt from 'bcrypt';
 import { deleteFile, uploadFile } from './aws';
 
 interface IUpdateProfile {
-	displayName?: string;
-	email?: string;
+	displayName: string;
+	email: string;
 	phone?: string;
-	description?: string;
+	description: string;
 }
 
 const signIn = async (body: { username: string, password: string }): Promise<resType> => {
@@ -75,7 +75,24 @@ const addEmail = async (body: { username: string, email: string }): Promise<resT
 const updateUserProfile = async (body: IUpdateProfile, username: string): Promise<resType> => {
 	const { description, displayName, email, phone } = body;
 	const user = await User.findOne({ username });
-	return makeResponse(200, { message: 'Sucess' });
+	if (!user) return makeResponse(404, { message: 'User not found' });
+	if (!description || !displayName || !email) return makeResponse(400, { message: 'Missing parameters' });
+	if (!verifyEmail(email)) return makeResponse(400, { message: 'Incorrect email format' });
+	if (phone) user._doc.phone = phone;
+	await user.updateOne({
+		...user._doc,
+		description,
+		displayName,
+		email
+	}).catch(err => (makeResponse(500, { message: err.message })));
+	return makeResponse(200, { message: 'Success' });
+}
+
+const verifyAuthorization = async (username: string): Promise<resType> => {
+	const user = await User.findOne({ username })
+		.select("-_id displayName phone description email")
+		.catch(error => (makeResponse(500, { message: error.message })));
+	return makeResponse(200, { data: user });
 }
 
 export default {
@@ -84,5 +101,6 @@ export default {
 	setImage,
 	deleteImage,
 	addEmail,
-	updateUserProfile
+	updateUserProfile,
+	verifyAuthorization
 }

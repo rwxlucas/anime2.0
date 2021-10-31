@@ -32,10 +32,16 @@ const updateProfile = async (req: Request, res: Response) => {
 	return res.status(controller.status).json(controller.response);
 }
 
+const verifyAuthorization = async (req: Request, res: Response) => {
+	const controller = await auth.verifyAuthorization((<IHeaders>req.headers).username!);
+	return res.status(controller.status).json(controller.response);
+}
+
 export default {
 	signIn,
 	signUp,
 	setImage,
 	deleteImage,
-	updateProfile
+	updateProfile,
+	verifyAuthorization
 }

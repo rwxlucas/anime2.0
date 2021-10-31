@@ -4,14 +4,18 @@ interface IUserImage {
 	key: string;
 	location: string;
 }
-interface User extends Document {
+interface IUser extends Document {
+	_doc?: any;
 	username: string;
 	password: string;
 	email?: string;
 	image?: IUserImage;
+	description?: string;
+	phone?: string;
+	displayName?: string;
 }
 
-const userSchema = new Schema<User>({
+const userSchema = new Schema<IUser>({
 	username: {
 		type: String,
 		required: true,
@@ -32,9 +36,21 @@ const userSchema = new Schema<User>({
 		},
 		required: false,
 		_id: false
+	},
+	description: {
+		type: String,
+		required: false
+	},
+	displayName: {
+		type: String,
+		required: false
+	},
+	phone: {
+		type: String,
+		required: false
 	}
 });
 
-const userModel = model<User>('user', userSchema);
+const userModel = model<IUser>('user', userSchema);
 
 export default userModel;

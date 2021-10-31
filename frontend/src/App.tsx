@@ -8,6 +8,7 @@ import { LoadingContext } from './contexts/LoadingContext';
 import Loading from './components/Loading/Loading';
 import { AuthContext } from './contexts/AuthContext';
 import Account from './page/Account/Account';
+import { verifyAuthorization } from './services/authService';
 
 import './App.scss';
 function App() {
@@ -15,9 +16,17 @@ function App() {
   const { loading } = useContext(LoadingContext);
   const { setAuth, auth } = useContext(AuthContext);
 
+
   useEffect(() => {
     if (localStorage.getItem("xauthorization")) setAuth(localStorage.getItem("xauthorization"));
-  }, [setAuth]);
+    if (auth) {
+      verifyAuthorization(auth).then((response) => {
+        if (response.status !== 200) setAuth('');
+      }).catch(() => {
+        setAuth('');
+      });
+    };
+  }, [auth, setAuth]);
 
   return (
     <div className={`App ${popup ? 'popupHandler' : ''}`}  >
