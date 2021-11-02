@@ -32,7 +32,7 @@ function App() {
         setAuth('');
       });
     };
-  }, [auth, setAuth]);
+  }, [auth, setAuth, setUser]);
 
   return (
     <div className={`App ${popup ? 'popupHandler' : ''}`}  >

@@ -15,7 +15,7 @@ const signUp = async (req: Request, res: Response) => {
 }
 
 const setImage = async (req: Request, res: Response) => {
-	const { file } = req;
+	const { file }: any = req;
 	const controller = await auth.setImage((<IHeaders>req.headers).username!, file!);
 	return res.status(controller.status).json(controller.response);
 }

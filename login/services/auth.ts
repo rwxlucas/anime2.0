@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/user';
 import env from '../config/index';
 import bcrypt from 'bcrypt';
-import { deleteFile, uploadFile } from './aws';
+import { deleteFile, getFile, uploadFile } from './aws';
 
 interface IUpdateProfile {
 	displayName: string;
@@ -89,10 +89,23 @@ const updateUserProfile = async (body: IUpdateProfile, username: string): Promis
 }
 
 const verifyAuthorization = async (username: string): Promise<resType> => {
-	const user = await User.findOne({ username })
-		.select("-_id displayName phone description email")
-		.catch(error => (makeResponse(500, { message: error.message })));
-	return makeResponse(200, { data: user });
+	try {
+		const user = await User.findOne({ username }).select("-_id displayName phone description email image");
+		if (user) {
+			if (user.image) {
+				const imageBuffer = await getFile(user.image.key);
+				const imageType = user.image.key.split('.');
+				delete user._doc.image;
+				if (imageBuffer.Body) {
+					user._doc.image = `data:${imageType[imageType.length - 1]};base64, ${Buffer.from(imageBuffer.Body).toString('base64')}`;
+				}
+			}
+			return makeResponse(200, { data: user });
+		}
+		return makeResponse(404, { message: 'User not found' });
+	} catch (error: any) {
+		return makeResponse(500, { message: error.message });
+	}
 }
 
 export default {

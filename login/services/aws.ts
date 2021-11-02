@@ -36,3 +36,10 @@ export const deleteFile = async (key: string): Promise<any> => {
     Key: key
   }).promise();
 }
+
+export const getFile = async (filePath: string): Promise<any> => {
+  return await S3Client.getObject({
+    Bucket: config.bucket,
+    Key: filePath
+  }).promise();
+}

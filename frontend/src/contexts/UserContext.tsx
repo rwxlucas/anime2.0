@@ -5,6 +5,7 @@ interface IUserInfo {
   description?: string;
   email?: string;
   displayName?: string;
+  image?: string;
 }
 
 interface IUserContext {
