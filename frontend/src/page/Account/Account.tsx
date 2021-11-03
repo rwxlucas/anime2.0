@@ -3,7 +3,7 @@ import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import { AuthContext } from '../../contexts/AuthContext';
 import { UserContext } from '../../contexts/UserContext';
-import { setImage, updateAccountInfo } from '../../services/authService';
+import { setImage, updateAccountInfo } from '../../services/userService';
 import './Account.scss';
 
 
@@ -24,8 +24,8 @@ const Account = () => {
 	const updateFunction = async () => {
 		const updateUser = await updateAccountInfo({ email, phone, description, displayName }, auth);
 		if (updateUser) {
-			const { data } = updateUser;
-			setUser({ ...user, data });
+			const { data: { data } } = updateUser;
+			setUser({ ...user, ...data });
 		}
 	}
 

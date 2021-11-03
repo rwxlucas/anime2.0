@@ -19,11 +19,3 @@ export const register = async (username: string, password: string) => {
 export const verifyAuthorization = async (xauthorization: string) => {
 	return GET(loginURL, 'auth/verify', { headers: { xauthorization } });
 }
-
-export const updateAccountInfo = async (userInfo: IUserInfo, xauthorization: string) => {
-	return PUT(loginURL, 'auth/profile', userInfo, { headers: { xauthorization } });
-}
-
-export const setImage = async (userImage: FormData, xauthorization: string) => {
-	return POST(loginURL, 'auth/setimage', userImage, { headers: { xauthorization } });
-}
