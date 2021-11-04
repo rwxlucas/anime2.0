@@ -1,12 +1,5 @@
-import { GET, POST, PUT } from "./service"
+import { GET, POST } from "./service"
 import { loginURL } from "../config";
-
-interface IUserInfo {
-	description: string;
-	displayName: string;
-	email: string;
-	phone: string
-}
 
 export const login = async (username: string, password: string) => {
 	return POST(loginURL, 'auth/signin', { username, password });

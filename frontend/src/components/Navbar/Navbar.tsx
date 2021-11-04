@@ -7,10 +7,12 @@ import Input from '../Input/Input';
 import Hamburger from '../Hamburger/Hamburger';
 import Menu from '../Menu/Menu';
 import './Navbar.scss';
+import { UserContext } from '../../contexts/UserContext';
 
 export const Navbar = () => {
 	const { setPopup } = useContext(PopupContext);
-	const { setAuth, auth } = useContext(AuthContext);
+	const { auth, setAuth } = useContext(AuthContext);
+	const { user } = useContext(UserContext);
 	const [searchText, setSearchText] = useState<string>('');
 	const history = useHistory();
 	const [openMenu, setOpenMenu] = useState<boolean>(false);
@@ -39,8 +41,15 @@ export const Navbar = () => {
 					<Input value={searchText} setValue={setSearchText} type={'text'} className={'lightInput'} placeholder={'Search'} />
 				</div>
 				<div className={'navbarComponent-searchLog-border'} ></div>
-				<div className={'navbarComponent-searchLog-menuUser'} >
-					{auth ? <div onClick={goToAccount} >Hello, Lucas!</div> : <i className={"fas fa-user"} onClick={() => setPopup('login')} ></i>}
+				<div className={`navbarComponent-searchLog-menuUser ${ user.image && auth ? '' : 'userDontHaveProfileImage'}`} >
+					{
+						auth ?
+							<div onClick={goToAccount} className={'navbarComponent-searchLog-menuUser-profileImage'} >
+								{user.image ? <img src={user.image} alt="" /> : 'Hello, Lucas!'}
+							</div>
+							:
+							<i className={"fas fa-user"} onClick={() => setPopup('login')} ></i>
+					}
 				</div>
 				{auth ?
 					<div className={'navbarComponent-searchLog-logout'} >

@@ -38,7 +38,7 @@
 		justify-content: center;
 		gap: 15px;
 		height: 30px;
-		&-searchInput{
+		&-searchInput {
 			height: 40px;
 			width: 250px;
 		}
@@ -47,6 +47,26 @@
 			border: 1px solid #fff;
 		}
 		&-menuUser {
+			width: 40px;
+			height: 40px;
+			margin-right: 20px;
+			&.userDontHaveProfileImage {
+				width: auto;
+				height: auto;
+				.navbarComponent-searchLog-menuUser-profileImage {
+					overflow: visible;
+				}
+			}
+			&-profileImage {
+				overflow: hidden;
+				height: 100%;
+				width: 100%;
+				border-radius: 50%;
+
+				> img {
+					height: 100%;
+				}
+			}
 			> i {
 				font-size: 22px;
 			}
